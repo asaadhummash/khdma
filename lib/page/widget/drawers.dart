@@ -7,8 +7,10 @@ import '../../language/app_words.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../about_us/about_us.dart';
+import '../auth/sign_in_page.dart';
 import '../auth/sign_up_page.dart';
 import '../home/home_page.dart';
+import '../job_requests/job_request.dart';
 import '../splash/splash_page.dart';
 import 'mediat_text.dart';
 import '../../vars.dart' as v;
@@ -72,7 +74,7 @@ class Drawers extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () => Get.toNamed(SignUpPage.id),
+            onTap: () => Get.to(HomePage()),
             title: Padding(
               padding: EdgeInsets.all(Dimensions.width20 - 12),
               child: Row(
@@ -80,7 +82,7 @@ class Drawers extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: Dimensions.width20),
                     child: const Icon(
-                      Icons.person,
+                      Icons.category,
                       color: AppColors.mainColor,
                     ),
                   ),
@@ -108,6 +110,39 @@ class Drawers extends StatelessWidget {
                   ),
                   MediatText(
                     text: AppWords.aboutUs,
+                    textAlign: TextAlign.center,
+                    color: AppColors.mainColor,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () async {
+              if (v.userData.length != 0)
+              {
+                Get.toNamed(JobRequest.id);
+              } else {
+                Fluttertoast.showToast(
+                  msg: "You must be login",
+                  backgroundColor: Colors.amber,
+                );
+                Get.toNamed(SignInPage.id);
+              }
+            },
+            title: Padding(
+              padding: EdgeInsets.all(Dimensions.width20 - 12),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: Dimensions.width20),
+                    child: const Icon(
+                      Icons.track_changes,
+                      color: AppColors.mainColor,
+                    ),
+                  ),
+                  MediatText(
+                    text: AppWords.jobRequest,
                     textAlign: TextAlign.center,
                     color: AppColors.mainColor,
                   ),

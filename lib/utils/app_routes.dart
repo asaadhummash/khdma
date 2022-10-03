@@ -7,6 +7,7 @@ import '../page/auth/sign_up_page.dart';
 import '../page/details/person_details_page.dart';
 import '../page/home/home_page.dart';
 import '../page/home/jobs_page.dart';
+import '../page/job_requests/job_request.dart';
 import '../page/jobs/jobs_info_page.dart';
 import '../page/splash/splash_page.dart';
 
@@ -60,6 +61,13 @@ class AppRoutes {
     GetPage(
       name: AboutUs.id,
       page: () => const AboutUs(),
+      // binding: RegisterBinding(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage(
+      name: JobRequest.id,
+      page: () => JobRequest(),
       // binding: RegisterBinding(),
       transition: Transition.fadeIn,
     ),

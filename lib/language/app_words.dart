@@ -11,6 +11,7 @@ class AppWords {
   static const String phone = "Phone";
   static const String update = "Update";
   static const String booking = "Booking";
+  static const String jobRequest = "Job request";
   static const String unBooking = "UnBooking";
   static const String chooseProfileImage = "Choose Profile Image";
   static const String image = "Image";
@@ -44,6 +45,8 @@ class AppWords {
   static const String getImageCategory="storage/images/";
 
   static const String getImageAds="api/adsindex";
+
+  static const String getJobRequest="api/work_usersindex/";
 
   static const String token="";
 

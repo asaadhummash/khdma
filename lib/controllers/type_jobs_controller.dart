@@ -44,23 +44,4 @@ class TypeJobsController extends GetxController {
           backgroundColor: AppColors.icoColor2, colorText: Colors.white);
     }
   }
-
-  // void getAllJobs(String jobId) async {
-  //   var allJobs = await Api().allCategory(jobId);
-  //   try {
-  //     isLoadingJob(false);
-  //     if (allJobs.isNotEmpty) {
-  //       jobsList.firstWhere((element) => element.id == jobId);
-  //       jobsList.addAll(allJobs);
-  //     }
-  //   } finally {
-  //     isLoadingJob(true);
-  //     Get.snackbar(
-  //       AppWords.checkInternet,
-  //       AppWords.pleaseCheckInternetConnection,
-  //       backgroundColor: AppColors.icoColor2,
-  //       colorText: Colors.white,
-  //     );
-  //   }
-  // }
 }

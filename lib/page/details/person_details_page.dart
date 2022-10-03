@@ -1,4 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:khdma/api/myapi.dart';
 import 'package:khdma/controllers/user_job_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +26,7 @@ class PersonDetailsPage extends StatefulWidget {
 
 class _PersonDetailsPageState extends State<PersonDetailsPage> {
   UserJobsController userJobsController = Get.find();
+  TextEditingController date = TextEditingController();
 
   MyApi myApi = MyApi();
 
@@ -354,6 +356,168 @@ class _PersonDetailsPageState extends State<PersonDetailsPage> {
                         ),
                       ),
                       SizedBox(height: 15),
+                      Form(child:
+                      Column(
+                        children: [
+                          Container(
+                            width: Get.width * 0.9,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.price_check,
+                                      color: Colors.blue,
+                                    )),
+                                Expanded(
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        labelText: "Price"
+                                    ),
+                                    controller: null,
+                                    validator: (String? val) {
+                                      if (val == null || val == "") {
+                                        return "لا يمكن ترك هذا الحقل فارغ";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                        Container(
+                          width: Get.width * 0.9,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: Dimensions.width20, right: Dimensions.width20),
+                            child: TextFormField(
+                              controller: date,
+                              decoration: InputDecoration(
+                                  icon: Icon(Icons.calendar_month),
+                                  labelText: "Select Date Start"
+                              ),
+                              onTap: () async {
+                                DateTime? pickDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2022),
+                                  lastDate: DateTime(3000),);
+                                if(pickDate !=null){
+                                  setState(() {
+                                    date.text = DateFormat('dd-mm-yyyy').format(pickDate);
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            width: Get.width * 0.9,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: Dimensions.width20, right: Dimensions.width20),
+                              child: TextFormField(
+                                controller: date,
+                                decoration: InputDecoration(
+                                    icon: Icon(Icons.calendar_month),
+                                    labelText: "Select Date End"
+                                ),
+                                onTap: () async {
+                                  DateTime? pickDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2022),
+                                    lastDate: DateTime(3000),);
+                                  if(pickDate !=null){
+                                    setState(() {
+                                      date.text = DateFormat('dd-mm-yyyy').format(pickDate);
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.report_problem_outlined,
+                                    color: Colors.blue,
+                                  )),
+                              Expanded(
+                                child: TextFormField(
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: 4,
+                                  decoration: InputDecoration(
+                                      labelText: "Problem"
+                                  ),
+                                  controller: null,
+                                  validator: (String? val) {
+                                    if (val == null || val == "") {
+                                      return "لا يمكن ترك هذا الحقل فارغ";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+
+                        ],
+                      ),
+                      ),
+                      SizedBox(height: 15),
                       Container(
                         width: Get.width * 0.6,
                         height: 60,
@@ -375,11 +539,8 @@ class _PersonDetailsPageState extends State<PersonDetailsPage> {
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     primary: AppColors.icoColor2),
-                                onPressed: (widget.jobsModel!.booking == "0")
-                                    ? () async {
-                                        isBooking = true;
-                                        openDialog();
-                                        setStateInternal(() {});
+                                onPressed: (widget.jobsModel!.booking == "0") ? () async {
+                                        isBooking = true;setStateInternal(() {});
                                         await myApi.postRequest(
                                             apiName: "booking",
                                             conditionId: "${widget.jobsModel!.id}",
@@ -438,132 +599,4 @@ class _PersonDetailsPageState extends State<PersonDetailsPage> {
       ),
     );
   }
-
-  Future openDialog() async => showDialog(context: context, builder: (context)=>
-      AlertDialog(
-        title: Text("Reservation confirmation"),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: MainText(text: widget.jobsModel?.name),
-            ),
-            SizedBox(
-              height: Dimensions.height20 - 10,
-            ),
-            SmallText(text: widget.jobsModel?.address),
-            SizedBox(
-              height: Dimensions.height20 - 10,
-            ),
-            SmallText(text: widget.jobsModel?.email),
-            SizedBox(
-              height: Dimensions.height20 - 10,
-            ),
-           SmallText(
-              text: widget.jobsModel?.phone,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Form(child:
-            Column(
-              children: [
-                Container(
-                  width: Get.width * 0.9,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.location_history,
-                            color: Colors.blue,
-                          )),
-                      Expanded(
-                        child: TextFormField(
-                          controller: null,
-                          validator: (String? val) {
-                            if (val == null || val == "") {
-                              return "لا يمكن ترك هذا الحقل فارغ";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  width: Get.width * 0.9,
-                  height: 50,
-                  child: Builder(builder: (context) {
-                    bool isUploading = false;
-                    return StatefulBuilder(builder: (context, setStateInternal) {
-                      return Visibility(
-                        visible: !isUploading,
-                        replacement: Column(
-                          children: [
-                            Container(
-                              width: 40,
-                              height: 40,
-                              child: CircularProgressIndicator(),
-                            ),
-                          ],
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Save"),
-                        ),
-                      );
-                    });
-                  }),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  width: Get.width * 0.9,
-                  height: 50,
-                  child: Builder(builder: (context) {
-                    bool isUploading = false;
-                    return StatefulBuilder(builder: (context, setStateInternal) {
-                      return Visibility(
-                        visible: !isUploading,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                          ),
-                          onPressed: () {
-                            Get.back();
-                          },
-                          child: Text("Back"),
-                        ),
-                      );
-                    });
-                  }),
-                ),
-              ],
-            ),
-
-            ),
-          ],
-        ),
-      ),
-  );
 }
